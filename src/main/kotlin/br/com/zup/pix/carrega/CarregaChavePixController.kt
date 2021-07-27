@@ -1,33 +1,33 @@
 package br.com.zup.pix.carrega
 
-import br.com.zup.RemoveChavePixRequest
-import br.com.zup.RemoveChavePixServiceGrpc
+import br.com.zup.CarregaChavePixRequest
+import br.com.zup.CarregaChavePixServiceGrpc
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Delete
-import org.slf4j.LoggerFactory
+import io.micronaut.http.annotation.Get
 import java.util.*
 
 @Controller("/api/v1/clientes/{clientId}")
-class CarregaChavePixController(private val removeChavePixClient: RemoveChavePixServiceGrpc.RemoveChavePixServiceBlockingStub) {
+class CarregaChavePixController(val carregaChaveClient: CarregaChavePixServiceGrpc.CarregaChavePixServiceBlockingStub) {
 
-    private val LOGGER = LoggerFactory.getLogger(this::class.java)
+    @Get("/pix/{pixId}")
+    fun carrega(clientId: UUID, pixId: UUID): HttpResponse<Any>{
 
-    @Delete("/pix/{pixId}")
-    fun delete(clientId: UUID, pixId: UUID) : HttpResponse<Any> {
-
-        LOGGER.info("[$clientId] removendo chave com id $pixId")
-
-        removeChavePixClient.remove(
-            RemoveChavePixRequest
-                .newBuilder().setClientId(clientId.toString())
-                .setPixId(pixId.toString())
+        val response = carregaChaveClient.carrega(
+            CarregaChavePixRequest
+                .newBuilder()
+                .setPixId(
+                    CarregaChavePixRequest
+                        .FiltroPorPixid
+                        .newBuilder()
+                        .setPixId(pixId.toString())
+                        .setClientId(clientId.toString())
+                        .build())
                 .build()
         )
 
-        return HttpResponse.ok()
+        return HttpResponse.ok(DetalhesChavePixResponse(response))
 
     }
-
 
 }

@@ -80,7 +80,7 @@ message CarregaChavePixResponse{
     TipoChavePix tipo = 1;
     string chave = 2;
     DetalhesConta conta = 3;
-    google.protobuf.Timestamp  criadaEm =4;
+    google.protobuf.Timestamp criadaEm =4;
 
 
   }
