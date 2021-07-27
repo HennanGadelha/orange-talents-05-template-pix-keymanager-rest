@@ -7,7 +7,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 @Introspected
-data class ListaChaveResponse(val chavePix: ListarChavesPixResponse.ChavePix) {
+ class ListaChaveResponse( chavePix: ListarChavesPixResponse.ChavePix) {
 
 
     val id = chavePix.pixId
