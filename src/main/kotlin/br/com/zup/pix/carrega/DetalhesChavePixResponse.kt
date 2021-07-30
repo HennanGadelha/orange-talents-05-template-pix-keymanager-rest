@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 @Introspected
- class DetalhesChavePixResponse(  chaveResponse: CarregaChavePixResponse) {
+ class DetalhesChavePixResponse( chaveResponse: CarregaChavePixResponse) {
 
     val pixId = chaveResponse.pixId
     val tipo = chaveResponse.chave.tipo
